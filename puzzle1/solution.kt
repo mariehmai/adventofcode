@@ -1,21 +1,18 @@
+package adventofcode.puzzle1
+
+import adventofcode.common.*
 import java.io.File
 
 fun main() {
-  val numbers = readFileAsLinesUsingBufferedReader("./input1.txt").map(String::toInt)
+  val numbers = readFileAsLinesUsingBufferedReader("./input.txt").map(String::toInt)
   println("[Part1] product result: ${part1(numbers)}")
   println("[Part2] product result: ${part2(numbers)}")
 }
 
-fun readFileAsLinesUsingBufferedReader(fileName: String): List<String>
-  = File(fileName).bufferedReader().readLines()
-
-fun product(numbers: List<Int>): Int
-  = numbers.fold(1) { product, element -> product * element }
-
 fun part1(numbers: List<Int>): Int {
   val inputs = findPairMatchingSum(numbers.sorted(), 2020)
   println("[Part1] inputs to multiply: ${inputs}")
-  
+
   return product(inputs.toList())
 }
 
@@ -34,7 +31,7 @@ fun findPairMatchingSum(numbers: List<Int>, sum: Int): Pair<Int, Int> {
 fun part2(numbers: List<Int>): Int {
   val inputs = findTripleMatchingSum(numbers.sorted(), 2020)
   println("[Part2] inputs to multiply: ${inputs}")
-  
+
   return product(inputs.toList())
 }
 
@@ -57,6 +54,9 @@ fun findTripleMatchingSum(numbers: List<Int>, sum: Int): Triple<Int, Int, Int> {
       }
     }
   }
-  
+
   return Triple(0, 0, 0)
 }
+
+private fun product(numbers: List<Int>): Int
+= numbers.fold(1) { product, element -> product * element }
