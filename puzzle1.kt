@@ -15,19 +15,16 @@ fun part1(numbers: List<Int>): Int {
   val inputs = findPairMatchingSum(numbers.sorted(), 2020)
   println("[Part1] inputs to multiply: ${inputs}")
   
-  return product(inputs)
+  return product(inputs.toList())
 }
 
-fun findPairMatchingSum(numbers: List<Int>, sum: Int): List<Int> {
-  for (i in 0 until numbers.count() - 3 step 1) {
-    val isEqualToSum = { x: Int, y: Int -> x + y == sum }
-    val isHigherThanSum = { x: Int, y: Int -> x + y > sum }
+fun findPairMatchingSum(numbers: List<Int>, sum: Int): Pair<Int, Int> {
+  val matchingSum: MutableMap<Int, Int> = mutableMapOf()
 
-    for (j in i+1 until numbers.count() step 1) {
-      if (isHigherThanSum(numbers[i], numbers[j])) break
-      if (isEqualToSum(numbers[i], numbers[j])) return listOf(numbers[i], numbers[j])
-    }
+  numbers.forEachIndexed { index, element ->
+    if (!matchingSum.containsKey(sum - element)) matchingSum.put(element, index)
+    else return Pair(element, sum - element)
   }
 
-  return listOf()
+  return Pair(0, 0)
 }
